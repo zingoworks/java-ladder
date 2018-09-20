@@ -5,27 +5,25 @@ import java.util.Random;
 public class Ladder {
     public Boolean[] ladderValue;
     public int numOfPeople;
-    public int maxLadderHeight;
 
     Random random = new Random();
 
-    public Ladder (int numOfPeople, int maxLadderHeight) {
+    public Ladder (int numOfPeople) {
         this.numOfPeople = numOfPeople;
-        this.maxLadderHeight = maxLadderHeight;
         ladderValue = new Boolean[numOfPeople - 1];
-        setLadder();
+        makeLadder();
     }
 
-    public void setLadder () {
+    public void makeLadder () {
         for (int i = 0; i < numOfPeople - 1; i++) {
             ladderValue[i] = random.nextBoolean();
         }
     }
 
-    public Ladder[] makeLadders () {
-        Ladder[] ladders = new Ladder[this.maxLadderHeight];
-        for (int i = 0; i < this.maxLadderHeight; i++) {
-            ladders[i] = new Ladder(this.numOfPeople, this.maxLadderHeight);
+    public Ladder[] makeLadders (int maxLadderHeight) {
+        Ladder[] ladders = new Ladder[maxLadderHeight];
+        for (int i = 0; i < maxLadderHeight; i++) {
+            ladders[i] = new Ladder(this.numOfPeople);
         }
         return ladders;
     }

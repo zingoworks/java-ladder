@@ -1,5 +1,6 @@
 package com.zingoworks.laddergame;
 
+import com.zingoworks.laddergame.domain.Ladder;
 import com.zingoworks.laddergame.view.InputView;
 import com.zingoworks.laddergame.view.ResultView;
 
@@ -8,6 +9,9 @@ public class LadderMain {
         int numOfPeople = InputView.inputPeople();
         int maxLadderHeight = InputView.inputMaxLadder();
 
-        ResultView.printResult(numOfPeople, maxLadderHeight);
+        Ladder ladder = new Ladder(numOfPeople);
+        Ladder[] l = ladder.makeLadders(maxLadderHeight);
+
+        ResultView.printResult(l);
     }
 }
