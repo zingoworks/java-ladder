@@ -8,21 +8,22 @@ public class ResultView {
     static final String BLANK = " ";
 
     public static void printResult (int numOfPeople, int maxLadderHeight) {
+        Ladder l = new Ladder(numOfPeople, maxLadderHeight);
+        Ladder[] ladders = l.makeLadders();
         for (int i = 0; i < maxLadderHeight; i++) {
-            printAllLine(numOfPeople);
+            printOneLadder(numOfPeople, ladders[i]);
         }
     }
 
-    private static void printAllLine(int numOfPeople) {
+    private static void printOneLadder(int numOfPeople, Ladder ladder) {
         printHorizon();
-        for (int i = 0; i < numOfPeople - 1; i++) {
-            Ladder l = new Ladder(numOfPeople);
-            printOneLine(l.ladder[i]);
+        for (int j = 0; j < numOfPeople - 1; j++) {
+            printLine(ladder.ladderValue[j]);
         }
         System.out.println("");
     }
 
-    private static void printOneLine (Boolean b) {
+    private static void printLine (Boolean b) {
         printVertical(b);
         printHorizon();
     }
