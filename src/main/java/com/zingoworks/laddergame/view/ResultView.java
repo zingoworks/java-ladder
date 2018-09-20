@@ -3,11 +3,9 @@ package com.zingoworks.laddergame.view;
 import com.zingoworks.laddergame.domain.Ladder;
 
 public class ResultView {
-
     static final String HORIZON = "|";
     static final String DASH = "-";
     static final String BLANK = " ";
-
 
     public static void printResult (int numOfPeople, int maxLadderHeight) {
         for (int i = 0; i < maxLadderHeight; i++) {
