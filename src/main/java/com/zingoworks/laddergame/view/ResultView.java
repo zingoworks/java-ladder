@@ -4,21 +4,34 @@ import com.zingoworks.laddergame.domain.Ladder;
 
 public class ResultView {
     static final String HORIZON = "|";
-    static final String DASH = "-";
-    static final String BLANK = " ";
+    static final String LADDERLINE = "-----";
+    static final String LADDERBLANK = "     ";
 
-    public static void printResult (Ladder[] l) {
-        for (int i = 0; i < l.length; i++) {
-            printOneLadder(l[0].numOfPeople, l[i]);
+    public static void printResult (Ladder l) {
+        printNames(l);
+        printLines(l);
+    }
+
+    private static void printNames(Ladder l) {
+        for (int i = 0; i < l.getNumOfPeople(); i++) {
+            System.out.print(l.getNames().get(i));
+        }
+        System.out.println("");
+    }
+
+    private static void printLines(Ladder l) {
+        for (int i = 0; i < l.getMaxLadderHeight(); i++) {
+            System.out.print(LADDERBLANK);
+            printHorizon();
+            printOneLine(l, i);
+            System.out.println("");
         }
     }
 
-    private static void printOneLadder(int numOfPeople, Ladder ladder) {
-        printHorizon();
-        for (int j = 0; j < numOfPeople - 1; j++) {
-            printOneSet(ladder.ladderValue[j]);
+    private static void printOneLine(Ladder l, int i) {
+        for (int j = 0; j < l.getNumOfPeople()- 1; j++) {
+            printOneSet(l.getLines().get(i).getBooleanInfo(j));
         }
-        System.out.println("");
     }
 
     private static void printOneSet(Boolean b) {
@@ -32,9 +45,9 @@ public class ResultView {
 
     private static void printVertical (Boolean b) {
         if (b == true) {
-            System.out.print(DASH);
+            System.out.print(LADDERLINE);
             return;
         }
-        System.out.print(BLANK);
+        System.out.print(LADDERBLANK);
     }
 }

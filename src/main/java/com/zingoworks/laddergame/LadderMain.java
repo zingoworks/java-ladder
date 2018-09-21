@@ -6,12 +6,11 @@ import com.zingoworks.laddergame.view.ResultView;
 
 public class LadderMain {
     public static void main(String[] args) {
-        int numOfPeople = InputView.inputPeople();
+        String[] nameOfPeople = InputView.inputPeople();
         int maxLadderHeight = InputView.inputMaxLadder();
 
-        Ladder ladder = new Ladder(numOfPeople);
-        Ladder[] l = ladder.makeLadders(maxLadderHeight);
+        Ladder ladder = new Ladder(nameOfPeople, maxLadderHeight);
 
-        ResultView.printResult(l);
+        ResultView.printResult(ladder);
     }
 }
