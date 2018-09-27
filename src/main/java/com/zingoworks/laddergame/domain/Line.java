@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Line {
-    private ArrayList<Boolean> points = new ArrayList<>();
+    public ArrayList<Boolean> points = new ArrayList<>();
 
     Random random = new Random();
 

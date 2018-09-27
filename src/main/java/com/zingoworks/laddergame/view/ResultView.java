@@ -8,8 +8,10 @@ public class ResultView {
     static final String LADDERBLANK = "     ";
 
     public static void printResult (Ladder l) {
+        System.out.println("사다리 결과");
         printNames(l);
         printLines(l);
+        printValues(l);
     }
 
     private static void printNames(Ladder l) {
@@ -26,6 +28,34 @@ public class ResultView {
             printOneLine(l, i);
             System.out.println("");
         }
+    }
+
+    private static void printValues(Ladder l) {
+        for (int i = 0; i < l.getNumOfPeople(); i++) {
+            System.out.print(l.getValues().get(i));
+        }
+        System.out.println("");
+    }
+
+
+    public static void printCheckResult (Ladder l, String[] nameOfPeople, String personToCheck) {
+        System.out.println("실행결과");
+
+        if (personToCheck.equals("all")) {
+            for (int i = 0; i < nameOfPeople.length; i++) {
+                System.out.println(nameOfPeople[i] + " : " + l.valueOfLadder[l.getValuesPosition()[i]]);
+            }
+            return;
+        }
+
+        int num = 0;
+        for (int i = 0; i < nameOfPeople.length; i++) {
+            if(nameOfPeople[i].equals(personToCheck)) {
+                num = i;
+            }
+        }
+
+        System.out.println(l.valueOfLadder[l.getValuesPosition()[num]]);
     }
 
     private static void printOneLine(Ladder l, int i) {
