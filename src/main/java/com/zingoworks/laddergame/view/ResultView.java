@@ -1,83 +1,87 @@
 package com.zingoworks.laddergame.view;
 
+import com.zingoworks.laddergame.domain.DestinationIndex;
+import com.zingoworks.laddergame.utilities.Utilities;
 import com.zingoworks.laddergame.domain.Ladder;
 
 public class ResultView {
     static final String HORIZON = "|";
-    static final String LADDERLINE = "-----";
-    static final String LADDERBLANK = "     ";
+    static final String LINE_DASH = "-----";
+    static final String LINE_BLANK = "     ";
 
-    public static void printResult (Ladder l) {
+    public static void print (Ladder ladder) {
         System.out.println("사다리 결과");
-        printNames(l);
-        printLines(l);
-        printValues(l);
+        printUserName(ladder);
+        printLadder(ladder);
+        convertLengthToDefault(ladder);
+        printResult(ladder);
     }
 
-    private static void printNames(Ladder l) {
-        for (int i = 0; i < l.getNumOfPeople(); i++) {
-            System.out.print(l.getNames().get(i));
-        }
-        System.out.println("");
-    }
-
-    private static void printLines(Ladder l) {
-        for (int i = 0; i < l.getMaxLadderHeight(); i++) {
-            System.out.print(LADDERBLANK);
-            printHorizon();
-            printOneLine(l, i);
-            System.out.println("");
-        }
-    }
-
-    private static void printValues(Ladder l) {
-        for (int i = 0; i < l.getNumOfPeople(); i++) {
-            System.out.print(l.getValues().get(i));
-        }
-        System.out.println("");
-    }
-
-
-    public static void printCheckResult (Ladder l, String[] nameOfPeople, String personToCheck) {
+    public static void printCheckResult (Ladder ladder, DestinationIndex index, String userToCheck) {
         System.out.println("실행결과");
 
-        if (personToCheck.equals("all")) {
-            for (int i = 0; i < nameOfPeople.length; i++) {
-                System.out.println(nameOfPeople[i] + " : " + l.valueOfLadder[l.getValuesPosition()[i]]);
-            }
+        if (userToCheck.equals("all")) {
+            printAll(ladder, index);
             return;
         }
-
-        int num = 0;
-        for (int i = 0; i < nameOfPeople.length; i++) {
-            if(nameOfPeople[i].equals(personToCheck)) {
-                num = i;
-            }
-        }
-
-        System.out.println(l.valueOfLadder[l.getValuesPosition()[num]]);
-    }
-
-    private static void printOneLine(Ladder l, int i) {
-        for (int j = 0; j < l.getNumOfPeople()- 1; j++) {
-            printOneSet(l.getLines().get(i).getBooleanInfo(j));
+        for (int i = 0; i < ladder.getUser().size(); i++) {
+            printOne(ladder, index, userToCheck, i);
         }
     }
 
-    private static void printOneSet(Boolean b) {
-        printVertical(b);
-        printHorizon();
+    private static void printAll(Ladder ladder, DestinationIndex index) {
+        for (int i = 0; i < ladder.getUser().size(); i++) {
+            System.out.println(ladder.getUser().get(i) + " : " + index.getDestination().get(i));
+        }
     }
 
-    private static void printHorizon () {
-        System.out.print(HORIZON);
+    private static void printOne(Ladder ladder, DestinationIndex index, String userToCheck, int i) {
+        if (userToCheck.equals(ladder.getUser().get(i).toString())) {
+            System.out.println(index.getDestination().get(i));
+        }
     }
 
-    private static void printVertical (Boolean b) {
+    private static void convertLengthToDefault (Ladder ladder) {
+        for (int i = 0; i < ladder.getUser().size(); i++) {
+            Utilities.convertLengthToDefault(ladder.getUser()).get(i);
+        }
+    }
+
+    private static void printUserName (Ladder ladder) {
+        for (int i = 0; i < ladder.getUser().size(); i++) {
+            System.out.print(Utilities.convertLengthToLimit(ladder.getUser()).get(i));
+        }
+        System.out.println("");
+    }
+
+    private static void printLadder (Ladder ladder) {
+        for (int i = 0; i < ladder.getLadderHeight(); i++) {
+            System.out.print(LINE_BLANK);
+            System.out.print(HORIZON);
+            drawLine(ladder, i);
+        }
+    }
+
+    private static void drawLine(Ladder ladder, int i) {
+        for (int j = 0; j < ladder.getUser().size() - 1; j++) {
+            drawRung(ladder.getLine().get(i).getRungExistence(j));
+            System.out.print(HORIZON);
+        }
+        System.out.println("");
+    }
+
+    private static void drawRung(Boolean b) {
         if (b == true) {
-            System.out.print(LADDERLINE);
+            System.out.print(LINE_DASH);
             return;
         }
-        System.out.print(LADDERBLANK);
+        System.out.print(LINE_BLANK);
+    }
+
+    private static void printResult (Ladder ladder) {
+        for (int i = 0; i < ladder.getUser().size(); i++) {
+            System.out.print(Utilities.convertLengthToLimit(ladder.getResult()).get(i));
+        }
+        System.out.println("");
     }
 }

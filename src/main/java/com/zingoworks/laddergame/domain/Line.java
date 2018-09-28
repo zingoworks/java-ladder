@@ -4,34 +4,34 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Line {
-    public ArrayList<Boolean> points = new ArrayList<>();
+    public ArrayList<Boolean> rung = new ArrayList<>();
 
     Random random = new Random();
 
-    public Line (int numOfPeople) {
-        makeLine(numOfPeople);
-        updateLineProper();
+    public Line(int numOfUser) {
+        for (int i = 0; i < numOfUser - 1; i++) {
+            rung.add(random.nextBoolean());
+        }
+        makeUnconnectedLine();
     }
 
-    public void makeLine (int numOfPeople) {
-        for (int i = 0; i < numOfPeople - 1; i++) {
-            points.add(random.nextBoolean());
+    public Boolean getRungExistence(int i) {
+        return rung.get(i);
+    }
+
+    public int getLineLength() {
+        return rung.size();
+    }
+
+    private void makeUnconnectedLine() {
+        for (int i = 0; i < rung.size() - 1; i++) {
+            makePointDiscontinuously(i);
         }
     }
 
-    private void updateLineProper() {
-        for (int i = 0; i < points.size() - 1; i++) {
-            updateValueProper(i);
+    private void makePointDiscontinuously(int i) {
+        if ((rung.get(i) == true) && (rung.get(i + 1) == true)) {
+            rung.set(i + 1, false);
         }
-    }
-
-    private void updateValueProper(int i) {
-        if (points.get(i) == true && points.get(i + 1) == true) {
-            points.set(i + 1, false);
-        }
-    }
-
-    public Boolean getBooleanInfo (int i) {
-        return points.get(i);
     }
 }
